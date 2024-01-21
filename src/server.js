@@ -1,15 +1,8 @@
 //const http = require('http')
 import http from 'node:http'
-import { randomUUID } from 'node:crypto'
-import { Database } from './database.js';
 import { json } from './middlewares/json.js';
+import { routes } from './routes.js';
 
-//UUID   =>  UUID (Identificador Único Universal) é um padrão para identificadores únicos que são globalmente únicos. Esses identificadores são strings de 128 bits (geralmente representados como 32 caracteres hexadecimais divididos em grupos separados por hifens)
-
-const database = new Database()
-
-
-database.database
 
 const server = http.createServer(async (req,res)=>{
     const { method, url } = req;
@@ -17,25 +10,18 @@ const server = http.createServer(async (req,res)=>{
     await json(req, res)
 
 
-    if(method==='GET' && url==='/users'){
-        const users = database.select('users')
+    const route =  routes.find(route => {
+        return route.method === method && route.path === url
+    })
 
-        return res.end(JSON.stringify(users))
+
+    if(route){
+        return route.handler(req, res)
     }
 
-    if(method==='POST' && url==='/users'){
-        const { name, email } = req.body;
-        const user = {
-            id:randomUUID(),
-            name,
-            email
-        }
-        database.insert('users', user)
+    console.log(route)
 
-        return res.writeHead(201).end();
-    }
-
-    return res.writeHead(404)
+    return res.writeHead(404).end()
 })
 
 
