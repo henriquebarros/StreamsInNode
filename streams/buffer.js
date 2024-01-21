@@ -28,3 +28,9 @@ buf.write('Hello');
 
 // Exibindo o conteúdo do Buffer
 console.log(buf); // <Buffer 48 65 6c 6c 6f 00 00 00 00 00>
+
+
+//retornar o número em decimal
+buf = Buffer.from("hello")
+
+console.log(buf.toJSON())
