@@ -6,7 +6,7 @@
  * Aqui está um exemplo básico de como você pode criar um Buffer em Node.js:
  */
 
-
+//.from método da Buffer usado para criar um buffer a parti de um string 
 var buf = Buffer.from("ok")
 
 //Buffer metodo nativo do node que representa a forma como salva os dados em memória
