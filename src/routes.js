@@ -1,7 +1,7 @@
 
 import { randomUUID } from 'node:crypto'
 //UUID   =>  UUID (Identificador Único Universal) é um padrão para identificadores únicos que são globalmente únicos. Esses identificadores são strings de 128 bits (geralmente representados como 32 caracteres hexadecimais divididos em grupos separados por hifens)
-
+import { buildRoutePath } from './utils/build-route-path.js';
 import { Database } from "./database.js";
 const database = new Database()
 
@@ -9,7 +9,7 @@ const database = new Database()
 export const routes = [
     {
         method: 'GET',
-        path: '/users',
+        path: buildRoutePath('/users'),
         handler: (req, res) => {
             const users = database.select('users')
             return res.end(JSON.stringify(users))
@@ -18,7 +18,7 @@ export const routes = [
 
     {
         method: 'POST',
-        path: '/users',
+        path: buildRoutePath('/users'),
         handler: (req,res) => {
             const { name, email } = req.body;
             const user = {
@@ -33,7 +33,7 @@ export const routes = [
     },
     {
         method: 'DELETE',
-        path: '/users/:id',
+        path: buildRoutePath('/users/:id'),
         handler: (req,res) =>{
             return res.end()
         }
