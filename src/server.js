@@ -1,9 +1,10 @@
 //const http = require('http')
 import http from 'node:http'
+import { randomUUID } from 'node:crypto'
 import { Database } from './database.js';
 import { json } from './middlewares/json.js';
 
-
+//UUID   =>  UUID (Identificador Único Universal) é um padrão para identificadores únicos que são globalmente únicos. Esses identificadores são strings de 128 bits (geralmente representados como 32 caracteres hexadecimais divididos em grupos separados por hifens)
 
 const database = new Database()
 
@@ -25,7 +26,7 @@ const server = http.createServer(async (req,res)=>{
     if(method==='POST' && url==='/users'){
         const { name, email } = req.body;
         const user = {
-            id:1,
+            id:randomUUID(),
             name,
             email
         }
