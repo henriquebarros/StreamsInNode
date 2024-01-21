@@ -1,4 +1,5 @@
 import fs from 'node:fs/promises'
+import { serialize } from 'node:v8'
 
 const databasePath = new URL('../db.json', import.meta.url)
 
@@ -22,8 +23,20 @@ export class Database {
     }
 
     
-    select(table){
-        const data = this.#database[table] ?? []
+    select(table, search){
+        let data = this.#database[table] ?? []
+
+        if(search){
+            data = data.filter(row => {
+                //return Object.entries(search) 
+                //Ex.: transforma o objeto no seguinte array {name:"Henrique", email: "h@l.com"} => [['name','Henrique'], ['email','h@l.com']]
+                console.log(Object.entries(search))
+                return Object.entries(search).some(([key,value])=>{
+                    return row[key].toLowerCase().includes(value.toLowerCase())
+                })//some retorn um boolean, após percorrer o array e encontrar
+            })
+            //console.log(search,data)
+        }
 
         return data;
     }
