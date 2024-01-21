@@ -3,6 +3,11 @@ import http from 'node:http'
 import { json } from './middlewares/json.js';
 import { routes } from './routes.js';
 
+//formas em que frontend envia informações
+//Query Parameters: URL Stateful =>  utilizados para filtros, paginação, não obrigatórios.... não recomendados para dados sensíveis
+// Route Parameters: geralmente para Identificação de recursos 
+// Request Body: Comumente usado para Envio de informações de um formulário
+
 
 const server = http.createServer(async (req,res)=>{
     const { method, url } = req;
