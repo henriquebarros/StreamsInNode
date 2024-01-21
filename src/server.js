@@ -2,6 +2,7 @@
 import http from 'node:http'
 import { json } from './middlewares/json.js';
 import { routes } from './routes.js';
+import { extractQueryParams } from './utils/extract-query-params.js';
 
 //formas em que frontend envia informações
 //Query Parameters: URL Stateful =>  utilizados para filtros, paginação, não obrigatórios.... não recomendados para dados sensíveis
@@ -23,9 +24,12 @@ const server = http.createServer(async (req,res)=>{
     if(route){
         const routeParams = url.match(route.path)
 
-        const params = {...routeParams.groups}
+        const { query, ...params } = routeParams.groups
 
-        req.params = params
+
+
+        req.params = params;
+        req.query = query ? extractQueryParams(query) : {}
 
         
         return route.handler(req, res)
