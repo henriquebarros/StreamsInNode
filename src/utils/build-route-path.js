@@ -1,9 +1,14 @@
 export function buildRoutePath(path){
+    //path ex.: /users/:id => /^\/users\/(?<id>[a-z0-9-_]+)/
     const routeParametersRegex = /:([a-zA-Z]+)/g
     const pathWithParams = path.replaceAll(routeParametersRegex,'(?<$1>[a-z0-9\-_]+)')
 
     const pathRegex = new RegExp(`^${pathWithParams}(?<query>\\?(.*))?`)
-    /** tem por objetivo retornar o array abaixo, para localizar e definir os routes paramenters da requisição, 
+
+    return pathRegex
+}
+
+    /** tem por objetivo formatar o path 'exp.: /users/:id' em /users/, retornar o array abaixo, para localizar e definir os routes paramenters da requisição, 
      * neste caso o indice 1 do array 
      * nessa parte da regex ?<$1> (retorno da posição 1) é definido em groups, os routes paraments e seus valores
      * [
@@ -22,5 +27,3 @@ export function buildRoutePath(path){
         .* define qualquer caracter e inúmeras vezes
 
      */
-    return pathRegex
-}

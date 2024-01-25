@@ -17,7 +17,7 @@ export class Database {
             })
     }
 
-    //método para salvar e dados em aruivos
+    //método para salvar e dados em arquivos
     #persist(){
         fs.writeFile(databasePath, JSON.stringify(this.#database))
     }
@@ -30,7 +30,6 @@ export class Database {
             data = data.filter(row => {
                 //return Object.entries(search) 
                 //Ex.: transforma o objeto no seguinte array {name:"Henrique", email: "h@l.com"} => [['name','Henrique'], ['email','h@l.com']]
-                console.log(Object.entries(search))
                 return Object.entries(search).some(([key,value])=>{
                     return row[key].toLowerCase().includes(value.toLowerCase())
                 })//some retorn um boolean, após percorrer o array e encontrar
